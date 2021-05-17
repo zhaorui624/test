@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    class Queue{
+        constructor() {
+            this.count = 0;
+            this.lowestCount = 0;
+            this.items = {};
+        }
+        //方法：
+        enqueue(element){
+            this.items[this.count] = element;
+            this.count++;
+        }
+        dequeue(){
+            if(this.isEmpty()){
+                return undefined;
+            }
+            const result = this.items[this.lowestCount];//lowesCounte是指队头第一个元素
+            delete this.items[this.lowestCount];
+            this.lowestCount++;
+            return result;
+        }
+        size(){
+            return this.count - this.lowestCount;
+        }
+        isEmpty(){
+            return this.size() === 0;
+        }
+    }
+    function hotpotato(elementList,num) {
+        const queue = new Queue();//创建一个队列实例
+        const eliminatedList = [];//创建一个数组用来存放被淘汰的元素
+        for (let i = 0;i<elementList.length;i++){//将elementList中所有元素添加进队列当中
+            queue.enqueue(elementList[i])
+        }
+        while (queue.size()>1){
+            for (let i =0;i<num;i++){
+                queue.enqueue(queue.dequeue());//在执行到第num之前将每个淘汰的元素依次再加入到队列当中
+            }
+            eliminatedList.push(queue.dequeue());//被淘汰的元素依次加之前定义好的eliminatedList数组当中
+        }
+        return{
+            elminated:eliminatedList,
+            winners:queue.dequeue() //最后一个留下的人获胜
+        }
+    }
+    const Nums = [1,2,3,4,5]
+    const result = hotpotato(Nums,7);
+    console.log(result)
+</script>
+</html>

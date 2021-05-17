@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+   function Stack(){
+       const items = [];
+        //方法
+        this.push = function (element) {
+            items.push(element);
+        }
+        this.pop = function () {
+            return items.pop();
+        }
+       this.isEmpty = function () {
+           return items.length==0;
+       }
+    }
+    function decimalToBinary(decNumber) {
+        const stack = new Stack();//定义一个栈
+            let rem;//余数
+
+            let number = decNumber;
+            let String  =  '';
+        while(number>0){
+            rem = Math.floor(number%2);//除以二取出余数
+            stack.push(rem);//余数添加进栈
+            number = Math.floor(number/2);//剩下的数继续除以2
+        }
+        while(!stack.isEmpty()){    //判断栈是否为空
+            String+=stack.pop().toString();//将栈中的数字移出并转换为字符串
+        }
+        return String;
+    }
+   console.log(decimalToBinary(1000));
+
+</script>
+</html>
